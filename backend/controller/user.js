@@ -1,42 +1,42 @@
 const db = require('../database/index')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken'); 
-const dotenv = require('dotenv'); 
-JWT_secret
+// const dotenv = require('dotenv'); 
+JWT_secret= 'ascefbth,plnihcdxuwy'
 
 
-const validatePassword = (password)=> {
-    const errors = []
-    const passwordChecking=/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[a-zA-Z\d!@#$%^&*(),.?":{}|<>]{8,}$/;
+const validatePassword = (password) => {
+    const errors = [];
+    const passwordChecking = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[a-zA-Z\d!@#$%^&*(),.?":{}|<>]{8,}$/;
 
-     if(password.length < 8) {
-      errors.push("Password must contain at least 8 characters.")
-     }
-     if(!passwordChecking.test(password)) {
-       errors.push("Passord must contain at least one upper, lower one symblol")
-     }
-     return {
-        isValid: errors.lenght ===0,
-        errors: errors
-     }
+    if (password.length < 8) {
+        errors.push("Password must contain at least 8 characters.");
     }
+    if (!passwordChecking.test(password)) {
+        errors.push("Password must contain at least one uppercase letter, one lowercase letter, one digit, and one symbol.");
+    }
+
+    return {
+        isValid: errors.length === 0, // Fixed typo here
+        errors: errors,
+    };
+};
 
 
 const signup = async (req ,res) =>{
-
     try {
         const {
             email, 
             image,
             password, 
-            name
+            userName
         } = req.body
 
         const  hashedPassword = await bcrypt.hash(password,10)  // password 
         
-        // console.log(req.body); 
+        console.log("hashedPassword", hashedPassword); 
 
-        if(!email || !password || !name) {
+        if(!email || !password || !userName) {
             return res.status(400).send("Missing required fields");   // condition 
         } 
 
@@ -44,7 +44,7 @@ const signup = async (req ,res) =>{
         if(!passwordvalidation.isValid) {
             return res.status(400).json({
                 message: 'Password is too weak',        // condition 
-                errors: passwordValidation.errors
+                errors: passwordvalidation.errors
             });
         }
 
@@ -61,7 +61,7 @@ const signup = async (req ,res) =>{
                 email: email, 
                 image: image, 
                 password: hashedPassword, 
-                name: name
+                userName: userName
             }); 
 
             console.log("USer created: ", user);
@@ -108,7 +108,6 @@ const getUserImage = async (req,res) => {
 
 
 
-
 //::////////////// getting all users//////////////////
 const findAllUsers = async(req, res ) => {
     try {
@@ -119,6 +118,7 @@ const findAllUsers = async(req, res ) => {
     }
 }
 //::////////////// getting all users//////////////////
+
 
 
 //////// Login ///////////////////////////////////////////////////////////
@@ -140,7 +140,7 @@ const login = async (req, res) => {
         const token = jwt.sign(
             {
                 id:user.id, 
-                name: user.name, 
+                userName: user.userName, 
                 email: user.email
             }
         ); 
@@ -151,11 +151,11 @@ const login = async (req, res) => {
             message: 'Login successful', 
             user: {
                 id: user.id, 
-                name: user.name, 
+                userName: user.userName, 
                 email: user.email, 
                 type: user.type
             },
-            token 
+            token:token 
         })
 
     }
@@ -168,7 +168,7 @@ const login = async (req, res) => {
 
 //////////////////////////////////////////////////////: Login ////////////////////
 
-/////////////delete one //////////////////////////////////////////
+/////////////delete one /////////////////////////////////////////////////////////
 const deleteUser = async (req, res) => {
     try {
         const {id} = req.params;
@@ -183,14 +183,17 @@ const deleteUser = async (req, res) => {
 
 ////////////////////////////////////////////////delete one ////////
 
+
+
+///// upadate ///////////////////////////////////////////////
 const updateUser = async (req,res) => {
   try {
     const {id} = req.params;
-    const {email, password, name} = req.body
+    const {email, password, userName} = req.body
 
 
     const user = await db.User.update(
-        {email, password, name}, 
+        {email, password, userName}, 
         {where: {id}}
     );
     res.send(user)
@@ -199,6 +202,7 @@ const updateUser = async (req,res) => {
   }
 }
 
+///// upadate ///////////////////////////////////////////////
 
 
 module.exports = {signup, login, findAllUsers, deleteUser, updateUser, getUserImage}

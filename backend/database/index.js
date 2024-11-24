@@ -3,7 +3,7 @@ const config = require("./config");
 
 const dbConfig = config.development_mode;
 
-const connection = new Sequelize(
+const sequelize = new Sequelize(
   dbConfig.database,
   dbConfig.username,
   dbConfig.password,
@@ -13,8 +13,8 @@ const connection = new Sequelize(
   }
 );
 
-connection
-  .authenticate()
+sequelize  
+.authenticate()
   .then(() => {
     console.log("database connected ");
   })
@@ -24,24 +24,22 @@ connection
 
 const db = {};  // db is here 
 
-db.connection = connection;
+db.connection = sequelize;
 db.Sequilize = Sequelize;
 
-db.User = require("./models/User")(connection, Sequelize)
-db.Cart = require("./models/Cart")(connection, Sequelize)
-db.product = require("./models/product")(connection, Sequelize)
-
-
-console.log("db USer", typeof(db.User));
+db.User = require("./models/User")(sequelize, Sequelize)
+db.Cart = require("./models/Cart")(sequelize, Sequelize)
+db.product = require("./models/product")(sequelize, Sequelize)
+db.cart_product = require("./models/cart_product")(sequelize, Sequelize)
 
 db.User.hasMany(db.Cart)
 db.Cart.belongsTo(db.User)
 
-db.product.belongsToMany(db.Cart, { through: "cart_product" })
-db.Cart.belongsToMany(db.product, { through: "cart_product" })
+db.product.belongsToMany(db.Cart, { through: "cart_products" })
+db.Cart.belongsToMany(db.product, { through: "cart_products" })
 
 
-// connection.sync({force : true})
+// sequelize.sync({force : true})
 // .then(()=> { console.log("tables created" )})
 // .catch((error)=> {console.log(error)})
 
