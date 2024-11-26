@@ -12,8 +12,6 @@ export default function Profile() {
 
   const navigate = useNavigate();
 
-  const [userid, setuserid] = useState("");
-  const [userData, setuserData] = useState({});
   const [gogo, setgogo] = useState(false);
 
   const [view, setview] = useState(false);
@@ -57,6 +55,9 @@ export default function Profile() {
           className="profile-pic-rounded-in-center"
         />
         <h2 className="profile-h2">name: {username}</h2>
+        <button onClick={()=>{
+          navigate('/')
+        }}>back to home...</button>
       </div>
      
 

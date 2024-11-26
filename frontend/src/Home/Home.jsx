@@ -5,12 +5,9 @@ import NavigationBar from '../navBar/NavigationBar'
 import './Home.css'
 
 export default function Home() {
-  const [status, setstatus] = useState([]);
 const [productid , setproductid] = useState(0)
-  const location = useLocation();
-  const receivedData = location.state;
 
-  console.log("received Data :", receivedData)
+
 
   const [show, setshow] = useState(false);
   const [showTwo, setshowTwo] = useState(false);
@@ -19,7 +16,7 @@ const [productid , setproductid] = useState(0)
 
 
 const iduser = JSON.parse(localStorage.getItem("user")).id
-console.log(iduser);
+
 
   const [displayedProducts, setdisplayedProducts] = useState(allProduct);
 
@@ -45,11 +42,6 @@ console.log(iduser);
     setshowTwo(!showTwo);
   };
 
-
-  /////// This one will get all the products that have a certain price condition //////
-
-  ////////////////// Price /////////////////////////
-
   const allProductsByPrice = function (somth) {
     const result = displayedProducts.filter((elem) => {
       elem.price <= somth;
@@ -67,7 +59,6 @@ console.log(iduser);
   useEffect(()=>{
     getAllProducts()
   },[show, showTwo])
- ////////////////// Price /////////////////////////
 
 
  const postInCartProduct = function() {
@@ -112,7 +103,7 @@ console.log(iduser);
             </h2>
             <h2
               onClick={() => {
-                // Add functionality here
+                // Adddd funcionality here
               }}
             >
               Camera

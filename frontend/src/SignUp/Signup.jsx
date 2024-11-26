@@ -77,7 +77,7 @@ const handleAddUser = async () => {
             seterror("Email address is already registered. Please use a different email.");
         } else {
             console.log(err);
-            seterror("An error occurred during signup. Please try again later.");
+            seterror("An error occurred signup");
         }
     }
 };

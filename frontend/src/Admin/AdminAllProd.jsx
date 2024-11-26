@@ -39,7 +39,7 @@ export default function AdminAllProd() {
     /////// I can add Update the stock here if I have time
 
     useEffect(()=>{
-      getAllProducts()   /// we will get products whenever I delete a product 
+      getAllProducts() 
     },[gogg])
 
 

@@ -31,7 +31,7 @@ const handleLogin = async (e)=> {
         if (err.response.data.message === "Invalid credentials") {
             setError("Incorrect password. Please try again.");
         } else {
-            setError("An error occurred during login. Please try again later.");
+            setError("An error logining in ");
         }
     }
 } 
