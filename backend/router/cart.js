@@ -1,9 +1,10 @@
-const postProduct = require("../controller/cart")
+const {postProduct, getProduct} = require("../controller/cart")
 
 const express = require('express')
 const cartrouter = express.Router()
 
 
-cartrouter.post("/productInCart/:id", postProduct)
+cartrouter.post("/productInCart", postProduct)
+cartrouter.get("/product/:id", getProduct)
 
 module.exports = cartrouter

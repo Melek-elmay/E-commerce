@@ -1,0 +1,114 @@
+.profile-comp-div {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f3e8ff; /* Light lavender background */
+    min-height: 100vh;
+  }
+  
+  .blue-bar-div {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background-color: #b19cd9; /* Medium purple background */
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  
+  .profile-pic-rounded-in-center {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 3px solid #7b61ff; /* Vibrant purple border */
+  }
+  
+  .profile-h2 {
+    font-size: 20px;
+    color: #4a148c; /* Dark purple text */
+  }
+  
+  .toggle-create {
+    display: block;
+    margin: 0 auto 20px auto;
+    padding: 10px 20px;
+    background-color: #6a1b9a; /* Deep purple background */
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .toggle-create:hover {
+    background-color: #4a148c; /* Darker purple on hover */
+  }
+  
+  .post-product-profile {
+    padding: 20px;
+    background-color: #e1bee7; /* Soft lavender */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  
+  .post-product-profile-h1,
+  .post-product-profile-h3 {
+    color: #4a148c;
+  }
+  
+  input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #d1c4e9;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #6a1b9a;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #4a148c;
+  }
+  
+  .mapping-all-prod-div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  
+  .All-products-displayes {
+    background-color: #d1c4e9; /* Muted purple */
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: calc(33.33% - 20px);
+    box-sizing: border-box;
+    text-align: center;
+  }
+  
+  .All-products-displayes img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .All-products-displayes h2 {
+    color: #4a148c;
+  }
+  

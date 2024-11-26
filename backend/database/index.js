@@ -13,7 +13,7 @@ const sequelize = new Sequelize(
   }
 );
 
-sequelize  
+sequelize
 .authenticate()
   .then(() => {
     console.log("database connected ");
@@ -29,14 +29,14 @@ db.Sequilize = Sequelize;
 
 db.User = require("./models/User")(sequelize, Sequelize)
 db.Cart = require("./models/Cart")(sequelize, Sequelize)
-db.product = require("./models/product")(sequelize, Sequelize)
-db.cart_product = require("./models/cart_product")(sequelize, Sequelize)
+db.Product = require("./models/product")(sequelize, Sequelize)
+db.Cart_product = require("./models/cart_product")(sequelize, Sequelize)
 
 db.User.hasMany(db.Cart)
 db.Cart.belongsTo(db.User)
 
-db.product.belongsToMany(db.Cart, { through: "cart_products" })
-db.Cart.belongsToMany(db.product, { through: "cart_products" })
+db.Product.belongsToMany(db.Cart, { through: "Cart_product" })
+db.Cart.belongsToMany(db.Product, { through: "Cart_product" })
 
 
 // sequelize.sync({force : true})

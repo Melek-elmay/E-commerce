@@ -1,42 +1,27 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
+import './Signup.css'
 
 export default function Signup() {
-    const [name, setname] = useState();
-    const [email, setemail] = useState();
-    const [password, setpassword] = useState();
-    const [imageUrl, setimageUrl] = useState();
-    const [image, setimage] = useState();
-    const [error, seterror] = useState();
+    const [userName, setuserName] = useState("");
+    const [email, setemail] = useState("");
+    const [password, setpassword] = useState("");
+    const [imageUrl, setimageUrl] = useState("");
+    const [image, setimage] = useState(null);
+    const [error, seterror] = useState("");
 
 
 const navigate= useNavigate()
 
 
-const validatePassword=(password)=> {
-    const errors =[]
-    const passwordChecking=/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[a-zA-Z\d!@#$%^&*(),.?":{}|<>]{8,}$/;
-
-    if(password.lenght < 8) {
-       errors.push("password must contain at least 8 letters")
-    } 
-    if(!passwordChecking.test(password)) {
-        errors.push("password must contain at least one upper case, one lower case, and one symbol")
-    }
-
-    return {
-        isValid: errors.length === 0, 
-        errors: errors
-    }
-}
 
 const handleImageUpload = async (e) => {
     e.preventDefault(); 
     const data = new FormData()
     data.append('file', image); 
-    data.append('upload_reset', 'ecommerce'); 
-    data.append('cloud_name','dpqkzgd5z' )
+    data.append('upload_preset', 'ecommerce'); 
+    data.append('cloud_name','dpqkzgd5z')
     console.log(image)
 
     try {
@@ -48,63 +33,79 @@ const handleImageUpload = async (e) => {
     }
  }; 
 
- const handleAddUser = async () => {
+
+ 
+//  const validatePassword = (password) => {
+//     const errors = [];
+//     if (password.length < 8) {
+//         errors.push("password must contain at least 8 charaterees");
+//     }
+
+//     return {
+//         isValid: errors.length === 0,
+//         errors: errors
+//     };
+// };
+
+const handleAddUser = async () => {
     try {
-        const passswordValidation = validatePassword(password); 
-        if(!passswordValidation.isValid) {
-            seterror("password is too weak")
-            passswordValidation.errors.forEach((err)=>seterror((element)=> element + "  " + err  ))
-            return; 
+        // const passwordValidation = validatePassword(password);
+        // if (!passwordValidation.isValid) {
+        //     seterror("Password is too weak");
+        //     passwordValidation.errors.forEach((err) =>
+        //         seterror((element) => element + "  " + err)
+        //     );
+        //     return;
+        // }
+
+        const response = await axios.post(
+            "http://localhost:3000/user/signup",
+            {
+                userName,
+                email,
+                password,
+                image: imageUrl,
+            },
+            { headers: { "Content-Type": "application/json" } }
+        );
+
+        console.log(response.data);
+        seterror('');
+        navigate("/user/login");
+    } catch (err) {
+        if (err.response?.data === "User already exists") {
+            seterror("Email address is already registered. Please use a different email.");
+        } else {
+            console.log(err);
+            seterror("An error occurred during signup. Please try again later.");
         }
-
-        const response = await axios.post("http://localhost:3000/user/signup", {
-            name, 
-            email, 
-            password, 
-            image: imageUrl,
-        }, {headers: {'content-Type': "application/json"}}); 
-
-       console.log(response.data)
-       seterror('')
-       navigate("/login");
     }
-
-
-    catch(err) {
-      if(error.response.data === "User already exists"){
-         seterror("email address is already registered. Please use a diffferent email")
-      } else {
-        console.log(error)
-        seterror("an error occurred during signup, Please try again later")
-      }
-    }
- } 
+};
 
 
 
   return (
-    <div>
+    <div className='sign-up-main-div'>
         <h2>sign up</h2>
         <div>
-            <label htmlFor="fullName"></label>
-            <input type="text" value={name} onChange={(e)=>{setname(e.target.value)} }  placeholder= "enter your full name"/>
+            <label htmlFor="fullName" className='signup-label'>name</label>
+            <input type="text" onChange={(e)=>{setuserName(e.target.value)} }  placeholder= "enter your full name"/>
         </div>
 
         <div>
-            <label htmlFor="email">
-                <input type="text" value={email} onChange={(e)=>{setemail(e.target.value)}} placeholder='enter your email'/>
-            </label>
+            <label htmlFor="email" className='signup-label'> enter email </label>
+                <input type="text"  onChange={(e)=>{setemail(e.target.value)}} placeholder='enter your email'/>
+           
         </div>
 
         <div>
-            <label htmlFor="password">
-                <input type="text" value={password} onChange={(e)=>{setpassword(e.target.value)}} placeholder='enter your password'/>
-            </label>
+            <label htmlFor="password" className='signup-label'> enter Passowrd</label>
+            <input type="text" onChange={(e)=>{setpassword(e.target.value)}} placeholder='enter your password'/>
         </div>
 
         <div>
-           <label htmlFor="image"></label>
-           <input type="file" value={imageUrl} onChange={(e)=>setimage(e.target.files[0])}/>
+           <label htmlFor="image" className='signup-label'>post Image</label>
+           <input type="file" onChange={(e)=>setimage(e.target.files[0])}/>
            <button  onClick={handleImageUpload}>Upload</button>
         </div>
         <br />

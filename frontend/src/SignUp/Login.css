@@ -1,0 +1,56 @@
+
+.login-up-main-div {
+    max-width: 350px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.login-up-main-div div {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.login-label,
+.password-label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+}
+
+.login-up-main-div input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.login-up-main-div input[type="text"]:focus {
+    border-color: #600668;
+    outline: none;
+}
+
+.login-up-main-div button {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 16px;
+    background-color: #59075b;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-up-main-div button:hover {
+    background-color: #56032e;
+}

@@ -1,0 +1,49 @@
+.all-produc-in-Admin {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    max-width: 800px;
+    margin: 20px auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .maping-on-each {
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .maping-on-each h2 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+
+  .btn-all-produc-in-Admin {
+    padding: 10px 20px;
+    font-size: 14px;
+    color: white;
+    background-color: #5b065389;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .btn-all-produc-in-Admin:hover {
+    background-color: #53095e;
+  }
+
+  .all-produc-in-Admin > div {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  

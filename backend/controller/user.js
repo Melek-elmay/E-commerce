@@ -5,22 +5,6 @@ const jwt = require('jsonwebtoken');
 JWT_secret= 'ascefbth,plnihcdxuwy'
 
 
-const validatePassword = (password) => {
-    const errors = [];
-    const passwordChecking = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[a-zA-Z\d!@#$%^&*(),.?":{}|<>]{8,}$/;
-
-    if (password.length < 8) {
-        errors.push("Password must contain at least 8 characters.");
-    }
-    if (!passwordChecking.test(password)) {
-        errors.push("Password must contain at least one uppercase letter, one lowercase letter, one digit, and one symbol.");
-    }
-
-    return {
-        isValid: errors.length === 0, // Fixed typo here
-        errors: errors,
-    };
-};
 
 
 const signup = async (req ,res) =>{
@@ -32,7 +16,7 @@ const signup = async (req ,res) =>{
             userName
         } = req.body
 
-        const  hashedPassword = await bcrypt.hash(password,10)  // password 
+        const  hashedPassword = await bcrypt.hash(password,8)  // password 
         
         console.log("hashedPassword", hashedPassword); 
 
@@ -40,13 +24,6 @@ const signup = async (req ,res) =>{
             return res.status(400).send("Missing required fields");   // condition 
         } 
 
-        const passwordvalidation = validatePassword(password); 
-        if(!passwordvalidation.isValid) {
-            return res.status(400).json({
-                message: 'Password is too weak',        // condition 
-                errors: passwordvalidation.errors
-            });
-        }
 
         const getuser = await db.User.findOne({
             where: {
@@ -109,12 +86,14 @@ const getUserImage = async (req,res) => {
 
 
 //::////////////// getting all users//////////////////
-const findAllUsers = async(req, res ) => {
+const findOneUSer = async(req, res ) => {
     try {
-     const users = await db.User.findAll()
-     res.send(users)
+        const {id} = req.body; 
+
+        const user = await db.User.findOne({where: {id}}); 
+        res.send(user)
     } catch (err){
-      console.log('error findall users', err)
+      console.log('error find one user', err)
     }
 }
 //::////////////// getting all users//////////////////
@@ -125,6 +104,7 @@ const findAllUsers = async(req, res ) => {
 const login = async (req, res) => {
     try {
         const {email, password} = req.body; 
+console.log(req.body);
 
         const user = await db.User.findOne({where: {email}}); 
 
@@ -142,7 +122,7 @@ const login = async (req, res) => {
                 id:user.id, 
                 userName: user.userName, 
                 email: user.email
-            }
+            },"f54e6c702681f74f1f8f23c17188d540dd078c0ab0767099641f673c507c8c50390a204583840f3deee1eb88790e631873d1be78b9c7b1203c9a85e2cae7c53eea54858690b5e43996c8c07cf6c967f0d0c9bc1f9ad7cc73295e380cc83e31319ce0f3a5433386d645b2f68496dbb00b261887f11518736a38a692ee84596b2827ce187acf4fa210b831eb3a629d7047228cf5385c0ace19f2dbe15208f78972c33e87e60859c890c05bd82cb81d0c7ebe96deb37a900f00d413ca5d765d5700e8fc02ef6a1adaae4497d72ded0e9f88591b89d5e18bbc86ee703933e8434b3115430476202cd00201ebb0a70b8b53ca398067445069ad51ff32be2fc3368edc"
         ); 
         console.log('token token', token )
 
@@ -153,7 +133,7 @@ const login = async (req, res) => {
                 id: user.id, 
                 userName: user.userName, 
                 email: user.email, 
-                type: user.type
+                image : user.image
             },
             token:token 
         })
@@ -205,4 +185,4 @@ const updateUser = async (req,res) => {
 ///// upadate ///////////////////////////////////////////////
 
 
-module.exports = {signup, login, findAllUsers, deleteUser, updateUser, getUserImage}
+module.exports = {signup, login, findOneUSer, deleteUser, updateUser, getUserImage}
